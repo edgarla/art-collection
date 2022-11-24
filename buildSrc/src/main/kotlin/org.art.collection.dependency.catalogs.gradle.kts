@@ -28,6 +28,12 @@ tasks.jacocoTestReport {
     }
 }
 
+java {
+    toolchain{
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 tasks.jar {
     enabled = false
 }
