@@ -10,3 +10,8 @@ project, you will be set to do it.
 Also, you will find the use of [Version Catalogs](https://docs.gradle.org/current/userguide/platforms.html)
 which allows to manage versions for multiple dependencies in single or multimodule
 setups.
+
+#### Gradle Plugins
+* [Jacoco](https://docs.gradle.org/current/userguide/jacoco_plugin.html) - <i>Code coverage</i>
+* [Checkstyle](https://docs.gradle.org/current/userguide/checkstyle_plugin.html) - <i>Code style</i>
+* [Pmd](https://docs.gradle.org/current/userguide/pmd_plugin.html) - <i>Code quality</i>

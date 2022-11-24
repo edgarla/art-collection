@@ -1,6 +1,7 @@
 import org.gradle.kotlin.dsl.invoke
 
 plugins {
+    pmd
     java
     jacoco
     checkstyle
@@ -33,10 +34,15 @@ tasks {
         finalizedBy(tasks.jacocoTestReport)
     }
 
+    withType<Pmd>().configureEach {
+        ruleSets = listOf("category/java/errorprone.xml",
+            "category/java/bestpractices.xml")
+    }
+
     named<JacocoReport>("jacocoTestReport") {
         dependsOn(tasks.test)
         reports {
-            xml.required.set(false)
+            xml.required.set(true)
             csv.required.set(false)
         }
     }
