@@ -1,6 +1,6 @@
 # art-collection
 
-### Gradle
+### Gradle Building Exercise
 
 This is a Gradle exercise. On it, you will find the use of [Convention Plugins](https://docs.gradle.org/current/samples/sample_convention_plugins.html),
 this project is a single module project, the advantage of having this in place
