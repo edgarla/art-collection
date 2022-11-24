@@ -58,15 +58,10 @@ tasks {
     }
 
     withType<Checkstyle>().configureEach {
-        version = "10.3.2"
         ignoreFailures = false
         reports {
             xml.required.set(true)
             html.required.set(true)
         }
-    }
-
-    named("jar") {
-        enabled = true
     }
 }

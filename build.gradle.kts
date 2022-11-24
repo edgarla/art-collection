@@ -18,3 +18,7 @@ dependencies {
     annotationProcessor(libs.lombok)
     compileOnly(libs.lombok)
 }
+
+tasks.named<Jar>("jar") {
+    enabled = false
+}
