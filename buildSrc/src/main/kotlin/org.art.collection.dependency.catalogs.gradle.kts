@@ -1,39 +1,66 @@
-import gradle.kotlin.dsl.accessors._e115dd7072ba4d98136045faa736bf3c.jacocoTestReport
-import gradle.kotlin.dsl.accessors._e115dd7072ba4d98136045faa736bf3c.jar
-import gradle.kotlin.dsl.accessors._e115dd7072ba4d98136045faa736bf3c.test
 import org.gradle.kotlin.dsl.invoke
-import org.gradle.kotlin.dsl.jacoco
-import org.gradle.kotlin.dsl.java
-import org.gradle.kotlin.dsl.repositories
 
 plugins {
     java
     jacoco
+    checkstyle
+    `jvm-test-suite`
 }
 
 repositories {
     mavenCentral()
 }
 
-tasks.test {
-    useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
-}
-
-tasks.jacocoTestReport {
-    dependsOn(tasks.test)
-    reports {
-        xml.required.set(false)
-        csv.required.set(false)
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+            dependencies {
+                implementation("org.springframework.boot:spring-boot-starter-test:2.7.5")
+            }
+        }
     }
 }
 
-java {
-    toolchain{
-        languageVersion.set(JavaLanguageVersion.of(17))
+tasks {
+    withType<JavaCompile>().configureEach {
+        javaCompiler.set(javaToolchains.compilerFor {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        })
     }
-}
 
-tasks.jar {
-    enabled = false
+    named<Test>("test") {
+        finalizedBy(tasks.jacocoTestReport)
+    }
+
+    named<JacocoReport>("jacocoTestReport") {
+        dependsOn(tasks.test)
+        reports {
+            xml.required.set(false)
+            csv.required.set(false)
+        }
+    }
+
+    named<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
+        violationRules {
+            rule {
+                limit {
+                    minimum = BigDecimal.valueOf(70)
+                }
+            }
+        }
+    }
+
+    withType<Checkstyle>().configureEach {
+        version = "10.3.2"
+        ignoreFailures = false
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+    }
+
+    named("jar") {
+        enabled = true
+    }
 }
