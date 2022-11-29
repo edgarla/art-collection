@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.spring.boot.starter)
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.data.mongodb)
 
     annotationProcessor(libs.spring.boot.configuration.processor)
     annotationProcessor(libs.lombok)
